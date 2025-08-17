@@ -28,7 +28,7 @@ export function UrlForm({ onResult }: UrlFormProps) {
     setLoading(true)
     setError(null)
 
-    console.log("[v0] URL form submission started", { url: url.trim() })
+    console.log("URL form submission started", { url: url.trim() })
 
     try {
       // Validate and normalize URL - prepend https:// if no protocol
@@ -44,14 +44,14 @@ export function UrlForm({ onResult }: UrlFormProps) {
         maxPages: 1,
       }
 
-      console.log("[v0] Sending scrape webhook request", payload)
+      console.log("Sending scrape webhook request", payload)
       const result = await processScrapeWebhook(payload)
-      console.log("[v0] Scrape webhook response received", { resultLength: result.markdown?.length })
+      console.log("Scrape webhook response received", { resultLength: result.markdown?.length })
 
       onResult(result.markdown)
       setUrl("") // Clear form on success
     } catch (err) {
-      console.log("[v0] Scrape webhook error", err)
+      console.log("Scrape webhook error", err)
       setError(err instanceof Error ? err.message : "Failed to scrape website")
     } finally {
       setLoading(false)

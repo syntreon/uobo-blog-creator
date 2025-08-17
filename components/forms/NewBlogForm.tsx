@@ -70,7 +70,7 @@ export function NewBlogForm({ onSubmit }: NewBlogFormProps) {
     }, 1000)
 
     try {
-      console.log("[v0] Submitting new blog request:", { topic, additionalDetails, research })
+      console.log("Submitting new blog request:", { topic, additionalDetails, research })
 
       const result = await submitNewBlog({
         topic: topic.trim(),
@@ -78,7 +78,7 @@ export function NewBlogForm({ onSubmit }: NewBlogFormProps) {
         research,
       })
 
-      console.log("[v0] New blog generated successfully")
+      console.log("New blog generated successfully")
       clearInterval(progressInterval)
       setProgress(100)
 
@@ -91,7 +91,7 @@ export function NewBlogForm({ onSubmit }: NewBlogFormProps) {
 
       onSubmit?.()
     } catch (error) {
-      console.error("[v0] New blog generation error:", error)
+      console.error("New blog generation error:", error)
       clearInterval(progressInterval)
       setProgress(0)
       toast({

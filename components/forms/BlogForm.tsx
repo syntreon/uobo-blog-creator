@@ -56,7 +56,7 @@ export function BlogForm({ onResult }: BlogFormProps) {
     setLoading(true)
     setError(null)
 
-    console.log("[v0] Blog form submission started", {
+    console.log("Blog form submission started", {
       topic: topic.trim(),
       competitorBlogLength: competitorBlog.trim().length,
     })
@@ -69,14 +69,14 @@ export function BlogForm({ onResult }: BlogFormProps) {
         competitorBlog: competitorBlog.trim(),
       }
 
-      console.log("[v0] Sending blog webhook request", payload)
+      console.log("Sending blog webhook request", payload)
       const result = await processBlogWebhook(payload)
-      console.log("[v0] Blog webhook response received", { resultLength: result.markdown?.length })
+      console.log("Blog webhook response received", { resultLength: result.markdown?.length })
 
       setResponse(result.markdown)
       onResult?.(result.markdown)
     } catch (err) {
-      console.log("[v0] Blog webhook error", err)
+      console.log("Blog webhook error", err)
       setError(err instanceof Error ? err.message : "Failed to create blog content")
     } finally {
       setLoading(false)

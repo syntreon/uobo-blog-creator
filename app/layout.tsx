@@ -6,9 +6,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: "Website Tools",
-  description: "Web scraper and blog creation tools",
-  generator: "v0.app",
+  title: "Blog Creator",
+  description: "Web scraper and blog creation tools fo Uobo",
 }
 
 export default function RootLayout({
