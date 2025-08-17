@@ -8,10 +8,25 @@ import { BlogForm } from "@/components/forms/BlogForm"
 import { MarkdownViewer } from "@/components/MarkdownViewer"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { NewBlogForm } from "@/components/forms/NewBlogForm"
+import { Button } from "@/components/ui/button"
+import { ChevronsUpDown } from "lucide-react" // ui: double arrow icon
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export default function HomePage() {
   const [scrapeResult, setScrapeResult] = useState<string>("")
   const [blogResult, setBlogResult] = useState<string>("")
+  const [tab, setTab] = useState<string>("blog") // control tabs
+
+  const TAB_LABELS: Record<string, string> = {
+    blog: "Create Blog from Competitor",
+    newblog: "Create New Blog",
+    scrape: "Scrape Blog URL (Beta)",
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -26,11 +41,44 @@ export default function HomePage() {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="blog" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-6">
-            <TabsTrigger value="blog">Create Blog from Competitor</TabsTrigger>
-            <TabsTrigger value="newblog">Create New Blog</TabsTrigger>
-            <TabsTrigger value="scrape">Scrape Blog URL (Beta)</TabsTrigger>
+        <Tabs value={tab} onValueChange={setTab} className="w-full">
+          {/* mobile: dropdown selector */}
+          <div className="mb-4 sm:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full justify-between">
+                  <span>{TAB_LABELS[tab]}</span>
+                  <ChevronsUpDown className="ml-2 h-4 w-4 opacity-60" aria-hidden />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-[var(--dd-w,18rem)]">
+                <DropdownMenuItem onSelect={() => setTab("blog")}>{TAB_LABELS.blog}</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setTab("newblog")}>{TAB_LABELS.newblog}</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setTab("scrape")}>{TAB_LABELS.scrape}</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          {/* desktop: classic tabs */}
+          <TabsList className="w-full mb-6 hidden sm:grid sm:grid-cols-3">
+            <TabsTrigger
+              value="blog"
+              className="text-sm truncate"
+            >
+              {TAB_LABELS.blog}
+            </TabsTrigger>
+            <TabsTrigger
+              value="newblog"
+              className="text-sm truncate"
+            >
+              {TAB_LABELS.newblog}
+            </TabsTrigger>
+            <TabsTrigger
+              value="scrape"
+              className="text-sm truncate"
+            >
+              {TAB_LABELS.scrape}
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="blog" className="space-y-6">
